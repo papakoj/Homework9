@@ -1,9 +1,7 @@
 import java.util.ArrayList;
-import java.util.Map;
 import java.util.Random;
 
 public class LivingRoom extends Room {
-	//ArrayList<String> item;
 	ArrayList<String> states;
 	public int lookCounter;
 	public int talkCounter;
@@ -11,13 +9,10 @@ public class LivingRoom extends Room {
 	public int paperPick;
 	
 	public LivingRoom() {
-		//this.item = new ArrayList<>();
 		talkCounter = 0;
 		paperPick = 0;
 		lookCounter = 0;
 		useCounter = 0;
-		//item.add("Password");
-		//		item.add("Drawer");
 		this.states = new ArrayList<>();
 		states.add("You see Shida's picture on the wall. He has a creepy smile that sends shivers down your spine.");
 		states.add("You hear some crying.. It seems like it might be coming from the basement.");
@@ -111,12 +106,4 @@ public class LivingRoom extends Room {
 		System.out.println(" No response. ");
 	}
 	
-	public void help() {
-		System.out.println("Wait: wait in the room for one turn (Waiting can reveal more information about your surroundings.)");
-		System.out.println("Go <direction>: go in the given direction. e.g right, left, straight, back");
-		System.out.println("Talk to <object>: talk to the given object found in the room");
-		System.out.println("Pick up <item>: pick up the given item found in the room");
-		System.out.println("Use <item>: use the given item found in the player’s inventory");
-		System.out.println("Look at <object>: look at the given object found in the room");
-	}
 }

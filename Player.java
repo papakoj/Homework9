@@ -61,4 +61,11 @@ public class Player {
 		hasEaten = true;
 		inventory.remove("food");
 	}
+	
+	public boolean isGameOver() {
+		if (gameOver == 1) {
+			return true;
+		}
+		return false;
+	}
 }

@@ -12,16 +12,12 @@ public class Bedroom extends Room {
 	public int keyPick;
 
 	public Bedroom() {
-		//this.item = new ArrayList<>();
 		talkCounter = 0;
 		lookCounter = 0;
 		useCounter = 0;
 		gameOver = 0;
 		phonePick = 0;
 		keyPick = 0;
-		//item.add("Phone");
-		//item.add("Bathroom Key");
-		//		item.add("Drawer");
 		this.states = new ArrayList<>();
 		states.add("You look around the room and see signs of a struggle.");
 		states.add("You look around and see a key on the floor.");
@@ -65,7 +61,7 @@ public class Bedroom extends Room {
 			lookCounter++;
 		} else if (lookCounter > 2) {
 			Random x = new Random();
-			System.out.println(states.get(x.nextInt(4)));
+			System.out.println(states.get(x.nextInt(3)));
 		}
 	}
 
@@ -156,12 +152,4 @@ public class Bedroom extends Room {
 		return false;
 	}
 	
-	public void help() {
-		System.out.println("Wait: wait in the room for one turn (Waiting can reveal more information about your surroundings.)");
-		System.out.println("Go <direction>: go in the given direction. e.g right, left, straight, back");
-		System.out.println("Talk to <object>: talk to the given object found in the room e.g. girl, john");
-		System.out.println("Pick up <item>: pick up the given item found in the room");
-		System.out.println("Use <item>: use the given item found in the player’s inventory");
-		System.out.println("Look at <object>: look at the given object found in the room");
-	}
 }

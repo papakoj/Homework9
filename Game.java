@@ -33,7 +33,7 @@ public class Game {
 		System.out.println("For a list of valid commands, type help");
 		p.printStats();
 		
-		while(!cur.isGameOver()) {
+		while(!cur.isGameOver() || !p.isGameOver()) {
 			System.out.printf("%d ======\n", i);
 			i++;
 			System.out.println("> ");

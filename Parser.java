@@ -13,20 +13,20 @@ public class Parser {
 		String[] words = command.split(" ");
 		if (words[0].equalsIgnoreCase("wait")) {
 			cur.Wait(p);
-		} else if (words[0].equalsIgnoreCase("pick")) {
+		} else if (words[0].equalsIgnoreCase("pick")  && words.length > 2) {
 			if (words[1].equalsIgnoreCase("up")) {
 				cur.pickUp(words[2], p);
 			}
-		} else if (words[0].equalsIgnoreCase("use")) {
+		} else if (words[0].equalsIgnoreCase("use")  && words.length > 1) {
 			cur.use(words[1], p);
-		} else if (words[0].equalsIgnoreCase("talk")) {
+		} else if (words[0].equalsIgnoreCase("talk")  && words.length > 2) {
 			if (words[1].equalsIgnoreCase("to")) {
 				cur.talk(words[2], p);
 			}
-		}else if (words[0].equalsIgnoreCase("go")) {
+		}else if (words[0].equalsIgnoreCase("go")  && words.length > 1) {
 			int j = cur.walk(words[1], p);
 			cur = rooms.get(j);
-		} else if (words[0].equalsIgnoreCase("look")) {
+		} else if (words[0].equalsIgnoreCase("look")  && words.length > 2) {
 			if (words[1].equalsIgnoreCase("at")) {
 				cur.lookAt(p, words[2]);
 			}

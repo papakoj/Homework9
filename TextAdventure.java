@@ -7,7 +7,7 @@ public class TextAdventure {
 		Game g = new Game();
 		Scanner in = new Scanner(System.in);
 		g.play();
-		
+		in.close();
 	}
 	
 }

@@ -1,10 +1,8 @@
 import java.util.ArrayList;
-import java.util.Map;
 import java.util.Random;
 import java.util.Scanner;
 
 public class Basement extends Room {
-	//ArrayList<String> item;
 	ArrayList<String> states;
 	public int lookCounter;
 	public int talkCounter;
@@ -16,7 +14,6 @@ public class Basement extends Room {
 	public boolean isOpen = false;
 
 	public Basement() {
-		//this.item = new ArrayList<>();
 		talkCounter = 0;
 		gunPick = 0;
 		boxPick = 0;
@@ -24,9 +21,6 @@ public class Basement extends Room {
 		openCounter = 0;
 		useCounter = 0;
 		gameOver = 0;
-		//item.add("Box");
-		//item.add("Gun");
-		//		item.add("Drawer");
 		this.states = new ArrayList<>();
 		states.add("You see a little boy crying in the corner.");
 		states.add("The basement is really dark and cold.");
@@ -157,12 +151,4 @@ public class Basement extends Room {
 		return false;
 	}
 	
-	public void help() {
-		System.out.println("Wait: wait in the room for one turn (Waiting can reveal more information about your surroundings.)");
-		System.out.println("Go <direction>: go in the given direction. e.g right, left, straight, back");
-		System.out.println("Talk to <object>: talk to the given object found in the room");
-		System.out.println("Pick up <item>: pick up the given item found in the room");
-		System.out.println("Use <item>: use the given item found in the player’s inventory");
-		System.out.println("Look at <object>: look at the given object found in the room");
-	}
 }
