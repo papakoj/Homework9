@@ -2,17 +2,19 @@ import java.util.ArrayList;
 import java.util.Random;
 
 public class LivingRoom extends Room {
-	ArrayList<String> states;
-	public int lookCounter;
+	private ArrayList<String> states;
+	private ArrayList<String> conversation;
+	private int lookCounter;
 	public int talkCounter;
 	public int useCounter;
-	public int paperPick;
+	private int paperPick;
 	
 	public LivingRoom() {
 		talkCounter = 0;
 		paperPick = 0;
 		lookCounter = 0;
 		useCounter = 0;
+		conversation = new ArrayList<>();
 		this.states = new ArrayList<>();
 		states.add("You see Shida's picture on the wall. He has a creepy smile that sends shivers down your spine.");
 		states.add("You hear some crying.. It seems like it might be coming from the basement.");
@@ -20,6 +22,10 @@ public class LivingRoom extends Room {
 		states.add("The reporter on the TV says, \"There are no signs of where they may have been taken to. Anyone with any information should contact the police.\"");
 		states.add("You see a big door in front of you... Could this be the way out?");
 		states.add("You see a piece of paper sticking out from under the sofa.");
+		conversation.add("My family is looking for me!");
+		conversation.add("I wanna go back home!");
+		conversation.add("Shida is so scary.");
+		conversation.add("Let's go!");
 	}
 
 	public int walk(String direction, Player p) {
@@ -56,10 +62,14 @@ public class LivingRoom extends Room {
 			System.out.println(states.get(2));
 			lookCounter++;
 			states.remove(2);
+		}else if (lookCounter == 2){
+			System.out.println(states.get(3));
+			lookCounter++;
+			states.remove(3);
 		}
-		else if (lookCounter > 1) {
+		else if (lookCounter > 2) {
 			Random x = new Random();
-			System.out.println(states.get(x.nextInt(3)));
+			System.out.println(states.get(x.nextInt(states.size())));
 		}
 	}
 	
@@ -82,6 +92,7 @@ public class LivingRoom extends Room {
 			System.out.println("You pick up the paper and read it.");
 			System.out.println("The paper says \"207\"");
 			System.out.println("You are confused about what it means, so you put it in your pocket for later.");
+			
 		}else{
 			System.out.println("you can not pick up " + item + ".");
 		}
@@ -103,7 +114,16 @@ public class LivingRoom extends Room {
 	}
 
 	public void talk(String person, Player p) {
-		System.out.println(" No response. ");
+		Random x = new Random();
+		if (p.inventory.containsKey("Sarah") && (person.equalsIgnoreCase("girl") || person.equalsIgnoreCase("sarah"))) {	
+			System.out.println(conversation.get(x.nextInt(conversation.size())));
+		} else if (p.inventory.containsKey("John") && (person.equalsIgnoreCase("boy") || person.equalsIgnoreCase("john"))) {
+			System.out.println(conversation.get(x.nextInt(conversation.size())));
+		} else if (p.inventory.containsKey("Mike") && (person.equalsIgnoreCase("boy") || person.equalsIgnoreCase("mike"))) {
+			System.out.println(conversation.get(x.nextInt(conversation.size())));
+		} else {
+			System.out.println("No response.");
+		}
 	}
 	
 }

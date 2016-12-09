@@ -33,7 +33,7 @@ public class Parser {
 		} else if (words[0].equalsIgnoreCase("help")) {
 			cur.help();
 		} else {
-			System.out.println("Sorry, this is not a valid command.");
+			System.out.println("Sorry, " + command +  " is not a valid command.");
 			System.out.println("For a list of valid commands, type help.");
 		}
 		return cur;}

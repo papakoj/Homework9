@@ -1,8 +1,8 @@
 import java.util.Random;
 
 public class Shida {
-	int blood;
-	int gameOver;
+	public int blood;
+	public int gameOver;
 
 	public Shida() {
 		blood = 100;
@@ -71,6 +71,8 @@ public class Shida {
 			}
 		}
 	}
+	
+	
 	
 	public void printStats() {
 		System.out.println("Shida");

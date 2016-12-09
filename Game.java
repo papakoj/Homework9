@@ -33,19 +33,21 @@ public class Game {
 		System.out.println("For a list of valid commands, type help");
 		p.printStats();
 		
-		while(!cur.isGameOver() || !p.isGameOver()) {
+		while(!cur.isGameOver() && !p.isGameOver()) {
 			System.out.printf("%d ======\n", i);
 			i++;
 			System.out.println("> ");
 			cur = parse.parse(in, cur, p, rooms);
 		}
+		while (true){
 		System.out.println("Would you like to play again? Yes or No");
 		String answer = in.next();
 		if (answer.equalsIgnoreCase("yes")) {
 			Game g = new Game();
 			g.play();
-		} else {
+		} else if (answer.equalsIgnoreCase("no")){
 			return;
+		}
 		}
 	}
 }

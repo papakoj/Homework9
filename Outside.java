@@ -80,6 +80,9 @@ public class Outside extends Room {
 		} else if (item.equalsIgnoreCase("knife") || item.equalsIgnoreCase("gun")) {
 			if (p.inventory.containsKey(item)) {
 				p.attack(item, s);
+				if (s.blood > 0){
+					s.attack(p);
+				}
 				if (!p.isGameOver()) {
 					p.printStats();
 					s.printStats();

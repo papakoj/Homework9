@@ -4,10 +4,10 @@ import java.util.Map;
 public class Player {
 
 	String name;
-	int blood;
-	boolean hasEaten;
+	public int blood;
+	public boolean hasEaten;
 	Map<String, String> inventory;
-	int gameOver;
+	public int gameOver;
 
 	public Player(String name) {
 		this.name = name;
@@ -24,7 +24,7 @@ public class Player {
 				System.out.println("He knocks the knife out of your hand, and it flies into the out of sight.");
 				inventory.remove("knife");
 				s.blood -= 30;
-				if (s.blood <= 0) {
+				if (s.blood <= 0 || blood <= 0) {
 					gameOver = 1;
 					System.out.println("You defeated the Monster Shida!!!");
 					System.out.println("The children are now free and safe!!");
@@ -33,12 +33,15 @@ public class Player {
 			} else if (item.equalsIgnoreCase("knife") && !inventory.containsKey("knife")) {
 				System.out.println("You don't have the knife! Shida knocked it away!");
 				s.attack(this);
+				if (blood <= 0) {
+					gameOver = 1;
+				}
 			} else if (item.equalsIgnoreCase("gun") && inventory.containsKey("gun")) {
 				System.out.println("You shoot Shida with the gun!");
 				System.out.println("He falls to the ground!");
 				s.blood -= 70;
 				inventory.remove("gun");
-				if (s.blood <= 0) {
+				if (s.blood <= 0 || blood <= 0) {
 					gameOver = 1;
 					System.out.println("You defeated the Monster Shida!!!");
 					System.out.println("The children are now free and safe!!");

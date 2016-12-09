@@ -10,9 +10,11 @@ public class Bedroom extends Room {
 	public int gameOver;
 	public int phonePick;
 	public int keyPick;
+	public int doorOpen;
 
 	public Bedroom() {
 		talkCounter = 0;
+		doorOpen = 0;
 		lookCounter = 0;
 		useCounter = 0;
 		gameOver = 0;
@@ -20,17 +22,24 @@ public class Bedroom extends Room {
 		keyPick = 0;
 		this.states = new ArrayList<>();
 		states.add("You look around the room and see signs of a struggle.");
-		states.add("You look around and see a key on the floor.");
 		states.add("You see some blood on the ground.");
 		states.add("You see three doors, one to the left, one to the right, and one straight ahead.");
+		states.add("The room is cold and dark.");
 	}
-
+	public boolean isOpen(Player p){
+		if ((p.inventory.containsKey("key") && doorOpen == 0) || doorOpen > 0){
+			doorOpen++;
+			return true;
+		}else{
+			return false;
+		}
+	}
 	public int walk(String direction, Player p) {
 		if (direction.equalsIgnoreCase("left")) {
 			System.out.println("You walk into the Kitchen.");
 			return 2;
 		} else if (direction.equalsIgnoreCase("right")) {
-			if (!p.inventory.containsKey("key")) {
+			if (isOpen(p) == false) {
 				System.out.println("You try to open the door but you can't.");
 				System.out.println("Seems like you need a key.");
 				return 0;
@@ -59,7 +68,11 @@ public class Bedroom extends Room {
 		} else if (lookCounter == 2) {
 			System.out.println("You see a phone lying on the ground.");
 			lookCounter++;
-		} else if (lookCounter > 2) {
+		} else if  (lookCounter == 3) {
+			System.out.println("You look around and see a key on the floor.");
+			lookCounter++;
+		}
+		else if (lookCounter > 3) {
 			Random x = new Random();
 			System.out.println(states.get(x.nextInt(3)));
 		}
@@ -116,7 +129,10 @@ public class Bedroom extends Room {
 			System.out.println("You should have probably followed the instructions.");
 			System.out.println("GAME OVER!!");
 			this.gameOver = 1;
-		}  else {
+		}else if (item.equalsIgnoreCase("food") && p.inventory.containsKey("food")) {
+			p.eat();
+			p.printStats();
+		}else {
 			System.out.println("You cannot use " + item + ".");
 		}
 	}
@@ -144,12 +160,12 @@ public class Bedroom extends Room {
 			System.out.println("No response.");
 		}
 	}
-	
+
 	public boolean isGameOver() {
 		if (gameOver == 1) {
 			return true;
 		}
 		return false;
 	}
-	
+
 }

@@ -46,15 +46,19 @@ public class Basement extends Room {
 			p.inventory.put("Mike", "A boy found in basement");
 			states.remove(0);
 			lookCounter++;
-		} 
-		else if (lookCounter > 0) {
+		} else if(lookCounter == 1){
+			System.out.println(states.get(1));
+			states.remove(1);
+			lookCounter++;
+		}
+		else if (lookCounter > 1) {
 			Random x = new Random();
-			System.out.println(states.get(x.nextInt(4)));
+			System.out.println(states.get(x.nextInt(3)));
 		}
 	}
 
 	public void lookAt(Player p, String target) {
-		if (target.equalsIgnoreCase("mike")) {
+		if (target.equalsIgnoreCase("mike") || target.equalsIgnoreCase("boy")) {
 			System.out.println("He's a sad boy with curly, brown hair.");
 		} else if (target.equalsIgnoreCase("box")) {
 			if (p.inventory.containsKey("gun")) {

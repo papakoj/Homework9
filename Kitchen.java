@@ -2,31 +2,31 @@ import java.util.ArrayList;
 import java.util.Random;
 
 public class Kitchen extends Room {
-	//ArrayList<String> item;
-	ArrayList<String> states;
-	public int lookCounter;
-	public int talkCounter;
-	public int useFridge;
-	public int knifePick;
-	public int foodPick;
+	public ArrayList<String> states;
+	private int lookCounter;
+	private int talkCounter;
+	private int useFridge;
+	private int knifePick;
+	private int foodPick;
+	private ArrayList<String> conversation;
 
 	public Kitchen() {
-		//this.item = new ArrayList<>();
 		talkCounter = 0;
 		lookCounter = 0;
 		useFridge = 0;
 		knifePick = 0;
 		foodPick = 0;
-		
-		//item.add("Knife");
-		//item.add("Food");
-		//		item.add("Drawer");
 		this.states = new ArrayList<>();
+		this.conversation = new ArrayList<>();
 		states.add("You look around and find a fridge.");
 		states.add("You look around and find a knife.");
 		states.add("You see some dirty plates in the sink.");
 		states.add("The light is flickering.");
 		states.add("You see the door leading to the bedroom.");
+		conversation.add("You should eat so you can fight Shida.");
+		conversation.add("Let's get out of here quickly.");
+		conversation.add("I'm happy you found me.");
+		conversation.add("Let's go!");
 	}
 
 	public int walk(String direction, Player p) {
@@ -53,7 +53,7 @@ public class Kitchen extends Room {
 		}
 		else if (lookCounter > 1) {
 			Random x = new Random();
-			System.out.println(states.get(x.nextInt(3)));
+			System.out.println(states.get(x.nextInt(states.size())));
 		}
 	}
 
@@ -100,12 +100,25 @@ public class Kitchen extends Room {
 			p.eat();
 			p.printStats();
 		}else if (! (p.inventory.containsKey(item))) {
-		System.out.println("You cannot use " + item + ".");
+			System.out.println("You cannot use " + item + ".");
+		}
 	}
-}
 
 	public void talk(String person, Player p) {
-		System.out.println("No response.");
+		Random x = new Random();
+		if (p.blood == 100) {
+			conversation.remove(0);
+		} 
+		if (p.inventory.containsKey("Sarah") && (person.equalsIgnoreCase("girl") || person.equalsIgnoreCase("sarah"))) {	
+			System.out.println(conversation.get(x.nextInt(conversation.size())));
+		} else if (p.inventory.containsKey("John") && (person.equalsIgnoreCase("boy") || person.equalsIgnoreCase("john"))) {
+			System.out.println(conversation.get(x.nextInt(conversation.size())));
+		} else if (p.inventory.containsKey("Mike") && (person.equalsIgnoreCase("boy") || person.equalsIgnoreCase("mike"))) {
+			System.out.println(conversation.get(x.nextInt(conversation.size())));
+		} else {
+			System.out.println("No response.");
+		}
 	}
-
 }
+
+
