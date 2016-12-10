@@ -8,7 +8,7 @@ public class LivingRoom extends Room {
 	public int talkCounter;
 	public int useCounter;
 	private int paperPick;
-	
+
 	public LivingRoom() {
 		talkCounter = 0;
 		paperPick = 0;
@@ -22,6 +22,7 @@ public class LivingRoom extends Room {
 		states.add("The reporter on the TV says, \"There are no signs of where they may have been taken to. Anyone with any information should contact the police.\"");
 		states.add("You see a big door in front of you... Could this be the way out?");
 		states.add("You see a piece of paper sticking out from under the sofa.");
+		states.add("You see a set of stairs to your left.");
 		conversation.add("My family is looking for me!");
 		conversation.add("I wanna go back home!");
 		conversation.add("Shida is so scary.");
@@ -33,6 +34,8 @@ public class LivingRoom extends Room {
 			System.out.println("You walk to the Front Door. It will lead you out of the house.");
 			if (p.inventory.containsKey("Mike") && p.inventory.containsKey("Sarah") && p.inventory.containsKey("John")) {
 				System.out.println("You walk out the door with the children . . .");
+				System.out.println("You are outside now!");
+				System.out.println("The Monster Shida is staring at you scarily!");
 				return 5;
 			} else {
 				System.out.println("You think you have forgotten something . . . ");
@@ -47,7 +50,11 @@ public class LivingRoom extends Room {
 		} else if (direction.equalsIgnoreCase("back")) {
 			System.out.println("You walk back into the Bedroom.");
 			return 0;
-		} else {
+		} else if (direction.equalsIgnoreCase("right")) {
+			System.out.println("You walk into the Kitchen.");
+			return 2;
+		}
+		else {
 			System.out.println("You can only go straight, left or back.");
 			return 4;
 		}
@@ -72,7 +79,7 @@ public class LivingRoom extends Room {
 			System.out.println(states.get(x.nextInt(states.size())));
 		}
 	}
-	
+
 	public void lookAt(Player p, String target) {
 		if (target.equalsIgnoreCase("tv")) {
 			System.out.println("The news is still on the TV.");
@@ -92,7 +99,7 @@ public class LivingRoom extends Room {
 			System.out.println("You pick up the paper and read it.");
 			System.out.println("The paper says \"207\"");
 			System.out.println("You are confused about what it means, so you put it in your pocket for later.");
-			
+
 		}else{
 			System.out.println("you can not pick up " + item + ".");
 		}
@@ -125,5 +132,5 @@ public class LivingRoom extends Room {
 			System.out.println("No response.");
 		}
 	}
-	
+
 }

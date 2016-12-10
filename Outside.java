@@ -2,13 +2,13 @@ import java.util.ArrayList;
 import java.util.Random;
 
 public class Outside extends Room {
-	ArrayList<String> item;
-	ArrayList<String> states;
-	int lookCounter;
-	int talkCounter;
-	int gunCounter;
-	int gameOver;
-	Shida s;
+	private ArrayList<String> item;
+	private ArrayList<String> states;
+	private int lookCounter;
+	public int talkCounter;
+	public int gunCounter;
+	private int gameOver;
+	private Shida s;
 
 	public Outside() {
 		this.item = new ArrayList<>();
@@ -46,14 +46,32 @@ public class Outside extends Room {
 			System.out.println(states.get(0));
 			lookCounter++;
 			states.remove(0);
+			s.attack(p);
+			p.printStats();
+			s.printStats();
+			if (s.isGameOver()) {
+				gameOver = 1;
+			}
 		} else if (lookCounter == 1) {
 			System.out.println(states.get(0));
 			lookCounter++;
 			states.remove(0);
+			s.attack(p);
+			p.printStats();
+			s.printStats();
+			if (s.isGameOver()) {
+				gameOver = 1;
+			}
 		}
 		else if (lookCounter > 1) {
 			Random x = new Random();
-			System.out.println(states.get(x.nextInt(3)));
+			System.out.println(states.get(x.nextInt(states.size())));
+			s.attack(p);
+			p.printStats();
+			s.printStats();
+			if (s.isGameOver()) {
+				gameOver = 1;
+			}
 		}
 	}
 
@@ -73,6 +91,12 @@ public class Outside extends Room {
 		useH(item, p, s);
 	}
 
+	/**
+	 * Specialized version of use that allows for the player to fight Shida, updating their stats as they engage
+	 * @param item, the item to be used on Shida
+	 * @param p, the Player
+	 * @param s, Shida
+	 */
 	public void useH(String item, Player p, Shida s) {
 		if (item.equalsIgnoreCase("food") && p.inventory.containsKey("food")) {
 			p.eat();
@@ -86,20 +110,29 @@ public class Outside extends Room {
 				if (!p.isGameOver()) {
 					p.printStats();
 					s.printStats();
+				} else {
+					gameOver = 1;
 				}
 			} else {
 				System.out.println("You don't have " + item);
 				s.attack(p);
-				if (!p.isGameOver()) {
-					p.printStats();
-					s.printStats();
+				p.printStats();
+				s.printStats();
+				if (p.isGameOver() || s.isGameOver()) {
+					gameOver = 1;
 				}
 			}
 
+		} else if ((item.equalsIgnoreCase("doll") || item.equalsIgnoreCase("jacobsen")) && p.inventory.containsKey("Doll")) {
+			System.out.println("Trembling with fear, you throw Jacobsen at Shida.");
+			System.out.println("He catches the doll and stares at it for a few seconds.");
+			System.out.println("A wide smile breaks out on his face and he yells \"Jacobsen! You're back!\"");
+			System.out.println("He runs away happily, leaving you and the children safe from him.");
+			gameOver = 1;
 		} else {
 			System.out.println("You cannot use " + item + " to fight Shida!!!");
 			s.attack(p);
-			if (!p.isGameOver()) {
+			if (!p.isGameOver() || !s.isGameOver()) {
 				p.printStats();
 				s.printStats();
 			}

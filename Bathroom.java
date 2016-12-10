@@ -2,7 +2,6 @@ import java.util.ArrayList;
 import java.util.Random;
 
 public class Bathroom extends Room {
-	//ArrayList<String> item;
 	ArrayList<String> states;
 	public int lookCounter;
 	public int talkCounter;
@@ -10,19 +9,17 @@ public class Bathroom extends Room {
 	public int notePick;
 	
 	public Bathroom() {
-		//this.item = new ArrayList<>();
 		talkCounter = 0;
 		lookCounter = 0;
 		useCounter = 0;
 		notePick = 0;
-		//item.add("Note");
-		//		item.add("Drawer");
 		this.states = new ArrayList<>();
 		states.add("You look around the bathroom and see a little boy.");
 		states.add("You look around and see a note.");
 		states.add("You look around and find nothing special.");
 		states.add("You see your pale face in the mirror.");
 		states.add("You see a lot of magezines with Shida's face on the cover.");
+		states.add("You see a door to your left.");
 	}
 
 	public int walk(String direction, Player p) {
@@ -39,6 +36,7 @@ public class Bathroom extends Room {
 		if (lookCounter == 0) {
 			System.out.println(states.get(0));
 			p.inventory.put("John", "A sad, scared little boy");
+			System.out.println("The boy will follow you now.");
 			lookCounter++;
 			states.remove(0);
 		} else if (lookCounter == 1) {

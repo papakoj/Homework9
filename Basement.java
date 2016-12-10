@@ -26,7 +26,8 @@ public class Basement extends Room {
 		states.add("The basement is really dark and cold.");
 		states.add("You look around and find a box under the desk.");
 		states.add("You hear someone's footsteps. Was that from Shida?");
-		states.add("You see a creepy doll on the floor.");
+		states.add("You see a set of stairs to your right");
+		states.add("You see a creepy doll on the floor. Could that be Jacobsen?");
 	}
 
 	public int walk(String direction, Player p) {
@@ -34,7 +35,7 @@ public class Basement extends Room {
 			System.out.println("You see a set of stairs leading back to the livingroom.");
 			System.out.println("You walk up to the living room.");
 			return 4;
-		}else {
+		} else {
 			System.out.println("You can only go right.");
 			return 3;
 		}
@@ -44,6 +45,7 @@ public class Basement extends Room {
 		if (lookCounter == 0) {
 			System.out.println(states.get(0));
 			p.inventory.put("Mike", "A boy found in basement");
+			System.out.println("The boy will follow you now.");
 			states.remove(0);
 			lookCounter++;
 		} else if(lookCounter == 1){
@@ -53,7 +55,7 @@ public class Basement extends Room {
 		}
 		else if (lookCounter > 1) {
 			Random x = new Random();
-			System.out.println(states.get(x.nextInt(3)));
+			System.out.println(states.get(x.nextInt(states.size())));
 		}
 	}
 
@@ -76,15 +78,22 @@ public class Basement extends Room {
 	public void pickUp(String item, Player p) {
 		if (item.equalsIgnoreCase("box") && boxPick == 0) {
 			boxPick++;
-			p.inventory.put("box", "box contains gun");
+			p.inventory.put("box", "Box contains gun");
 			System.out.println("The box is locked. What is the passwords? We need to open it.");
 		} else if (item.equalsIgnoreCase("gun") && gunPick == 0 && isOpen == true) {
 			gunPick++;
-			p.inventory.put("gun", "a gun to fight");
+			p.inventory.put("gun", "A gun with one bullet. Let's use it wisely.");
+			p.inventory.put("box", "an empty box that used to contain a gun");
 			System.out.println("Wow! We are ready to fight now.");
 			System.out.println("Unfortunately, the gun only has one bullet!");
 			System.out.println("We need to use this very carefully.");
-		}else{
+		} else if ((item.equalsIgnoreCase("doll") || item.equalsIgnoreCase("Jacobsen")) && !p.inventory.containsKey("Doll")) {
+			System.out.println("You pick up the doll. It IS Jacobsen!");
+			System.out.println("You take Jacobsen, maybe it could come in handy.");
+			p.inventory.put("Doll", "Jacobsen, Shida's favourite doll");
+			states.remove(states.size()-1);
+		}
+		else {
 			System.out.println("you can not pick up " + item);
 		}
 	}
@@ -123,8 +132,10 @@ public class Basement extends Room {
 			System.out.println("You cannot use " + item);
 		}
 	}
+	
+	
 	public void talk(String person, Player p) {
-		if (p.inventory.containsKey("Mike") && (person.equalsIgnoreCase("mike") || person.equalsIgnoreCase("boy"))){
+		if (p.inventory.containsKey("Mike") && (person.equalsIgnoreCase("mike") || person.equalsIgnoreCase("boy"))) {
 			if (talkCounter == 0) {
 				System.out.println("He calls out to you, \"Please save me.\"");
 				talkCounter++;
@@ -141,7 +152,7 @@ public class Basement extends Room {
 				} else if (talkCounter > 2) {
 					System.out.println("He seems too scared to talk.");
 				}
-			}else{
+			} else {
 				System.out.println("No response.");
 			}
 		}

@@ -8,6 +8,7 @@ public class Kitchen extends Room {
 	private int useFridge;
 	private int knifePick;
 	private int foodPick;
+	private int gameOver;
 	private ArrayList<String> conversation;
 
 	public Kitchen() {
@@ -16,13 +17,14 @@ public class Kitchen extends Room {
 		useFridge = 0;
 		knifePick = 0;
 		foodPick = 0;
+		gameOver = 0;
 		this.states = new ArrayList<>();
 		this.conversation = new ArrayList<>();
 		states.add("You look around and find a fridge.");
 		states.add("You look around and find a knife.");
 		states.add("You see some dirty plates in the sink.");
 		states.add("The light is flickering.");
-		states.add("You see the door leading to the bedroom.");
+		states.add("You see the door leading to the Living Room.");
 		conversation.add("You should eat so you can fight Shida.");
 		conversation.add("Let's get out of here quickly.");
 		conversation.add("I'm happy you found me.");
@@ -30,11 +32,11 @@ public class Kitchen extends Room {
 	}
 
 	public int walk(String direction, Player p) {
-		if (direction.equalsIgnoreCase("right")) {
-			System.out.println("You walk back into the bedroom.");
-			return 0;
+		if (direction.equalsIgnoreCase("left")) {
+			System.out.println("You walk back into the Living Room.");
+			return 4;
 		} else {
-			System.out.println("You can only go right.");
+			System.out.println("You can only go left.");
 			return 2;
 		}
 	}
@@ -80,7 +82,13 @@ public class Kitchen extends Room {
 			foodPick++;
 			System.out.println("You take the food. You can eat anytime.");
 			p.inventory.put("food", "you can eat now");
-		} else{
+		} else if (item.equalsIgnoreCase("fridge")) {
+			System.out.println("You try to pick up the fridge.");
+			System.out.println("It's too heavy!! It falls and crushes you!");
+			System.out.println("You're dead! GAME OVER!!");
+			gameOver = 1;
+		}
+		else {
 			System.out.println("you can not pick up " + item);
 		}
 	}
@@ -99,7 +107,7 @@ public class Kitchen extends Room {
 		} if (item.equalsIgnoreCase("food") && p.inventory.containsKey("fridge") && p.inventory.containsKey("food")) {
 			p.eat();
 			p.printStats();
-		}else if (! (p.inventory.containsKey(item))) {
+		} else if (! (p.inventory.containsKey(item))) {
 			System.out.println("You cannot use " + item + ".");
 		}
 	}
@@ -118,6 +126,13 @@ public class Kitchen extends Room {
 		} else {
 			System.out.println("No response.");
 		}
+	}
+	
+	public boolean isGameOver() {
+		if (gameOver == 1) {
+			return true;
+		}
+		return false;
 	}
 }
 

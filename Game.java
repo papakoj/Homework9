@@ -18,7 +18,9 @@ public class Game {
 		cur = rooms.get(0);
 	}
 
-
+	/**
+	 * Main engine of the game. Constantly asks for input until the game is over, and can restart as necessary
+	 */
 	public void play() {
 		Scanner in = new Scanner(System.in);
 		int i = 0;
@@ -32,22 +34,25 @@ public class Game {
 		System.out.println();
 		System.out.println("For a list of valid commands, type help");
 		p.printStats();
-		
-		while(!cur.isGameOver() && !p.isGameOver()) {
+
+		while(!cur.isGameOver() && !p.isGameOver() && i != 666) {
 			System.out.printf("%d ======\n", i);
 			i++;
 			System.out.println("> ");
 			cur = parse.parse(in, cur, p, rooms);
 		}
-		while (true){
-		System.out.println("Would you like to play again? Yes or No");
-		String answer = in.next();
-		if (answer.equalsIgnoreCase("yes")) {
-			Game g = new Game();
-			g.play();
-		} else if (answer.equalsIgnoreCase("no")){
-			return;
+		if (i == 666) {
+			System.out.println("You have summoned Satan and begun the apocalypse. You go directly to Hell"); //JASOM AL-ADSANI
 		}
+		while (true) {
+			System.out.println("Would you like to play again? Yes or No");
+			String answer = in.nextLine();
+			if (answer.equalsIgnoreCase("yes")) {
+				Game g = new Game();
+				g.play();
+			} else if (answer.equalsIgnoreCase("no")){
+				return;
+			}
 		}
 	}
 }

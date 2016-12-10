@@ -35,10 +35,7 @@ public class Bedroom extends Room {
 		}
 	}
 	public int walk(String direction, Player p) {
-		if (direction.equalsIgnoreCase("left")) {
-			System.out.println("You walk into the Kitchen.");
-			return 2;
-		} else if (direction.equalsIgnoreCase("right")) {
+		if (direction.equalsIgnoreCase("right")) {
 			if (isOpen(p) == false) {
 				System.out.println("You try to open the door but you can't.");
 				System.out.println("Seems like you need a key.");
@@ -52,7 +49,7 @@ public class Bedroom extends Room {
 			System.out.println("You walk into the Living Room.");
 			return 4;
 		} else {
-			System.out.println("You can only go left, right or straight.");
+			System.out.println("You can only go right or straight.");
 			return 0;
 		}
 	}
@@ -64,6 +61,7 @@ public class Bedroom extends Room {
 		} else if (lookCounter == 1) {
 			System.out.println("You see a little girl in the corner crying.");
 			p.inventory.put("Sarah", "A sad, scared little girl");
+			System.out.println("She will follow you now.");
 			lookCounter++;
 		} else if (lookCounter == 2) {
 			System.out.println("You see a phone lying on the ground.");
@@ -74,7 +72,7 @@ public class Bedroom extends Room {
 		}
 		else if (lookCounter > 3) {
 			Random x = new Random();
-			System.out.println(states.get(x.nextInt(3)));
+			System.out.println(states.get(x.nextInt(states.size())));
 		}
 	}
 
@@ -82,7 +80,8 @@ public class Bedroom extends Room {
 		if (target.equalsIgnoreCase("sarah")) {
 			System.out.println("She looks scared and tired.");
 		} else if (target.equalsIgnoreCase("phone")) {
-			System.out.println("The phone is an iPhone 7 Plus.");
+			System.out.println("You read the message! It says \"Welcome to my House!\"");
+			System.out.println("\"Don't try to contact anyone, or else. . . \"");
 		} else if (target.equalsIgnoreCase("key")) {
 			System.out.println("\"What is this key for?\", you wonder.");
 		} else {
@@ -121,8 +120,10 @@ public class Bedroom extends Room {
 			useCounter++;
 		} else if (item.equalsIgnoreCase("phone") && useCounter == 5 && p.inventory.containsKey("phone")) {
 			System.out.println("The light fixture falls off the ceiling and hits you on the arm. You begin to bleed.");
+			p.blood -= 10;
 			System.out.println("You receive another message.");
 			System.out.println("\"You didn't listen to the instructions. Stop trying to call and you'll be safe.\"");
+			p.printStats();
 			useCounter++;
 		} else if (item.equalsIgnoreCase("phone") && useCounter == 10 && p.inventory.containsKey("phone")) {
 			System.out.println("The phone exlpodes next to your face. You die instantly.");
